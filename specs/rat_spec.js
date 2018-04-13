@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Rat = requite('../classes/rat.js')
+const Rat = require('../classes/rat.js')
 
 describe('Rat', function(){
 
@@ -10,5 +10,5 @@ describe('Rat', function(){
     rat = new Rat(10)
   });
 
-  
+
 });

@@ -7,8 +7,10 @@ describe('Task', function(){
 
 
   beforeEach(function(){
-    task1 = new Task(3, 4, 10, false)
+    task1 = new Task("Find the cat", 3, 4, 10, false)
   })
+
+  xit('should have a task name')
 
   xit('should have a difficulty level');
 
