@@ -1,6 +1,7 @@
 const assert = require('assert');
 const Hero = require('../classes/hero.js')
 const Task = require('../classes/task.js')
+const Food = require('../classes/food.js')
 
 describe('Hero', function(){
 
@@ -9,15 +10,19 @@ describe('Hero', function(){
   let task1, task2, task3;
   let inventory;
   let completedQuests;
+  let food1, food2;
 
 
   beforeEach(function(){
-    hero = new Hero("Steve", 100, "hamburger")
+    food1 = new Food("hamburger", 10)
+    food2 = new Food("banana", 3);
     task1 = new Task("Find the cat", 1, 2, 10, false)
     task2 = new Task("Slay the dragon", 5, 5, 1000, false)
     task3 = new Task("Rule the world", 5, 1, 1, false)
-    quests = [task1];
-    completedQuests = [];
+    tasks = [task1];
+    completedTasks = [];
+    inventory = [];
+    hero = new Hero("Steve", 100, "hamburger", 10, tasks, inventory)
   })
 
   it('should have a name', function(){
@@ -25,29 +30,102 @@ describe('Hero', function(){
     assert.strictEqual(actual, "Steve")
   });
 
-  xit('should have health');
+  it('should have health', function(){
+    actual = hero.health;
+    assert.strictEqual(actual, 100)
+  });
 
-  xit('should have a favourite food');
+  it('should have a favourite food', function(){
+    actual = hero.favFood;
+    assert.strictEqual(actual, 'hamburger')
+  });
 
-  xit('should be able to talk (say their name)');
+  it('should be able to talk (say their name)', function(){
+    actual = hero.talk();
+    assert.strictEqual(actual, 'My name is Steve')
+  });
 
-  xit('should have an inventory');
+  it('should have a wallet', function(){
+    actual = hero.wallet;
+    assert.strictEqual(actual, 10);
+  });
 
-  xit('should have a collection of tasks');
+  it('should be able to add to wallet', function(){
+    hero.addToWallet(10)
+    actual = hero.wallet;
+    assert.strictEqual(actual, 20);
+  })
 
-  xit('should be able to eat food');
+  it('should have a collection of tasks', function(){
+    actual = hero.tasks;
+    assert.deepStrictEqual(actual, [task1]);
+  });
 
-  xit('food should replenish health');
+  it('should be able to add tasks', function(){
+    hero.addTask(task2);
+    actual = hero.tasks;
+    assert.deepStrictEqual(actual, [task1, task2]);
+  })
 
-  xit('favourite food should replenish more health');
+  it('should be able to pick up food and put in inventory', function(){
+    hero.addFood(food1);
+    actual = hero.inventory;
+    assert.deepStrictEqual(actual, [food1])
+  })
 
-  xit('should be able to sort tasks by difficulty');
+  it('should be able to eat food from inventory', function(){
+    hero.addFood(food1);
+    hero.eatFood(food1);
+    actual = hero.inventory;
+    assert.deepStrictEqual(actual, []);
+  });
 
-  xit('should be able to sort tasks by urgency');
+  it('food should replenish health', function(){
+    hero.addFood(food2);
+    hero.eatFood(food2);
+    actual = hero.health;
+    assert.deepStrictEqual(actual, 103);
+  });
 
-  xit('should be able to sort tasks by reward');
+  it('favourite food should replenish more health', function(){
+    hero.addFood(food1);
+    hero.eatFood(food1);
+    actual = hero.health;
+    assert.strictEqual(actual, 115);
+  });
 
-  xit('should be able to view tasks by completed, or incompleted');
+  it('should be able to sort tasks by difficulty', function(){
+    hero.addTask(task2);
+    hero.sortTaskDifficulty();
+    actual = hero.tasks;
+    assert.deepStrictEqual(actual, [task1, task2])
+  });
+
+  it('should be able to sort tasks by urgency', function(){
+    hero.addTask(task2);
+    hero.addTask(task3)
+    hero.sortTaskUrgency();
+    actual = hero.tasks;
+    assert.deepStrictEqual(actual, [task3, task1, task2])
+  });
+
+  it('should be able to sort tasks by reward', function() {
+    hero.addTask(task2);
+    hero.addTask(task3)
+    hero.sortTaskReward();
+    actual = hero.tasks;
+    assert.deepStrictEqual(actual, [task3, task1, task2])
+  });
+
+  it('should be able to complete tasks', function(){
+    hero.completeTask(task1);
+    actual = hero.completedTasks;
+    assert.deepStrictEqual(actual, [task1] )
+  })
+
+  xit('should be able to view tasks by completed, or incompleted', function(){
+
+  });
 
   xit('should be able to eat poisonous food');
 

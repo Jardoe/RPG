@@ -1,4 +1,5 @@
-const Task = function(difficulty, urgency, reward, status){
+const Task = function(name, difficulty, urgency, reward, status){
+  this.name = name;
   this.difficulty = difficulty;
   this.urgency = urgency;
   this.reward = reward;
