@@ -2,6 +2,7 @@ const assert = require('assert');
 const Hero = require('../classes/hero.js')
 const Task = require('../classes/task.js')
 const Food = require('../classes/food.js')
+const Rat = require('../classes/rat.js')
 
 describe('Hero', function(){
 
@@ -9,11 +10,13 @@ describe('Hero', function(){
   let quests;
   let task1, task2, task3;
   let inventory;
-  let completedQuests;
+  let completedTasks;
   let food1, food2;
+  let rat;
 
 
   beforeEach(function(){
+    rat = new Rat(10);
     food1 = new Food("hamburger", 10)
     food2 = new Food("banana", 3);
     task1 = new Task("Find the cat", 1, 2, 10, false)
@@ -22,7 +25,7 @@ describe('Hero', function(){
     tasks = [task1];
     completedTasks = [];
     inventory = [];
-    hero = new Hero("Steve", 100, "hamburger", 10, tasks, inventory)
+    hero = new Hero("Steve", 100, "hamburger", 10, tasks, inventory, completedTasks)
   })
 
   it('should have a name', function(){
@@ -123,16 +126,43 @@ describe('Hero', function(){
     assert.deepStrictEqual(actual, [task1] )
   })
 
-  xit('should be able to view tasks by completed, or incompleted', function(){
-
+  it('should be able to view tasks by completed', function(){
+    hero.addTask(task2);
+    hero.completeTask(task1);
+    actual1 = hero.completedTasks;
+    assert.deepStrictEqual(actual1, [task1] )
   });
 
-  xit('should be able to eat poisonous food');
+  it('should be able to put tasks in completed',function(){
+    hero.changeStatus(task1);
+    hero.putTaskInCompleted(task1);
+    actual = hero.completedTasks;
+    assert.deepStrictEqual(actual, [task1])
+  })
 
-  xit('should be able to lose health points from food');
+  it('should be able to have multiple tasks and complete one', function(){
+    hero.addTask(task2);
+    hero.addTask(task3);
+    hero.completeTask(task1);
+    actual = hero.tasks;
+    assert.deepStrictEqual(actual, [task2, task3])
+  });
 
+  it('should be able to eat poisonous food', function(){
+    rat.touch(food2);
+    hero.addFood(food2);
+    hero.eatFood(food2);
+    actual = hero.inventory;
+    assert.deepStrictEqual(actual, [])
+  });
 
+  it('should be able to lose health points from food', function(){
+    rat.touch(food2);
+    hero.addFood(food2);
+    hero.eatFood(food2);
+    console.log(food2);
+    actual = hero.health;
+    assert.strictEqual(actual, 97);
+  });
 
-
-
-})
+});
