@@ -5,4 +5,8 @@ const Food = function(name, replenish){
 
 }
 
+Food.prototype.poison = function () {
+  return this.poisoned = true;  
+};
+
 module.exports = Food;

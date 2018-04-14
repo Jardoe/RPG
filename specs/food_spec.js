@@ -12,10 +12,19 @@ describe('Food', function(){
 
   })
 
-    xit('should have a name');
+    it('should have a name', function(){
+      actual = food1.name
+      assert.strictEqual(actual, 'hamburger')
+    });
 
-    xit('should have a replenishment value');
+    it('should have a replenishment value', function(){
+      actual = food1.replenish
+      assert.strictEqual(actual, 10);
+    });
 
-    xit('should be able to be poisoned');
+    it('should be able to be poisoned', function(){
+      actual = food1.poison()
+      assert.strictEqual(actual, true)
+    });
 
 });

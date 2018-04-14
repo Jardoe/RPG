@@ -160,7 +160,6 @@ describe('Hero', function(){
     rat.touch(food2);
     hero.addFood(food2);
     hero.eatFood(food2);
-    console.log(food2);
     actual = hero.health;
     assert.strictEqual(actual, 97);
   });
