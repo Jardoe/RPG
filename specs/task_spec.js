@@ -1,23 +1,30 @@
 const assert = require('assert');
 const Task = require('../classes/task.js')
 
-let task1
-
 describe('Task', function(){
-
+  let task1
 
   beforeEach(function(){
     task1 = new Task("Find the cat", 3, 4, 10, false)
   })
 
-  xit('should have a task name')
+  it('should have a task name', function(){
+    actual = task1.name
+    assert.strictEqual(actual, "Find the cat");
+  });
 
-  xit('should have a difficulty level');
+  it('should have a difficulty level', function(){
+    actual = task1.difficulty
+    assert.strictEqual(actual, 3 );
+  });
 
-  xit('should have urgency level');
+  it('should have urgency level', function(){
+    actual = task1.urgency
+    assert.strictEqual(actual, 4 );
+  });
 
-  xit('should have reward');
-
-  xit('should be able to set completion');
-
+  it('should have reward', function(){
+    actual = task1.reward
+    assert.strictEqual(actual, 10 );
+  });
 });
